@@ -73,22 +73,45 @@ def main():
     parser.add_argument('--epochs', type=int, default=10, help='Number of training epochs')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size')
     parser.add_argument('--lr', type=float, default=0.001, help='Learning rate')
+    
+    # New arguments for experiments
+    parser.add_argument('--hidden_layers', type=int, nargs='+', default=[512], help='List of hidden layer sizes')
+    parser.add_argument('--activation', type=str, default='relu', choices=['relu', 'leaky_relu', 'elu', 'tanh'], help='Activation function')
+    parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate')
+    parser.add_argument('--batch_norm', action='store_true', help='Use Batch Normalization in classifier')
+    parser.add_argument('--optimizer', type=str, default='adam', choices=['sgd', 'adam', 'adamw'], help='Optimizer')
+    
     args = parser.parse_args()
 
     # Setup
     device = get_device()
     print(f"Using device: {device}")
+    print(f"Configuration: {args}")
 
     # Data
     train_loader, test_loader, classes = get_data_loaders(batch_size=args.batch_size)
     print(f"Classes: {classes}")
 
     # Model
-    model = FashionClassifier().to(device)
+    model = FashionClassifier(
+        num_classes=10,
+        hidden_layers=args.hidden_layers,
+        activation=args.activation,
+        dropout_rate=args.dropout,
+        use_bn=args.batch_norm
+    ).to(device)
     
     # Loss and Optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    
+    if args.optimizer == 'sgd':
+        optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9)
+    elif args.optimizer == 'adam':
+        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    elif args.optimizer == 'adamw':
+        optimizer = optim.AdamW(model.parameters(), lr=args.lr)
+    else:
+        raise ValueError(f"Unsupported optimizer: {args.optimizer}")
 
     # Training Loop
     train_losses, test_losses = [], []
