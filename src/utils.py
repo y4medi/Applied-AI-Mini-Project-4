@@ -45,53 +45,7 @@ def get_data_loaders(batch_size=64, data_dir='./data'):
     
     return train_loader, test_loader, classes
 
-def plot_training_curves(train_losses, test_losses, train_accs, test_accs, save_path='./results/training_curves.png'):
-    """
-    Plots the training and validation loss and accuracy curves.
-    """
-    plt.figure(figsize=(12, 5))
 
-    # Plot Loss
-    plt.subplot(1, 2, 1)
-    plt.plot(train_losses, label='Train Loss')
-    plt.plot(test_losses, label='Test Loss')
-    plt.title('Loss over Epochs')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.legend()
-    plt.grid(True)
-
-    # Plot Accuracy
-    plt.subplot(1, 2, 2)
-    plt.plot(train_accs, label='Train Accuracy')
-    plt.plot(test_accs, label='Test Accuracy')
-    plt.title('Accuracy over Epochs')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy (%)')
-    plt.legend()
-    plt.grid(True)
-
-    # Save and close
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    plt.savefig(save_path)
-    plt.close()
-    print(f"Training curves saved to {save_path}")
-
-def plot_confusion_matrix_heatmap(y_true, y_pred, classes, save_path='./results/confusion_matrix.png'):
-    """
-    Generates and saves a confusion matrix heatmap.
-    """
-    cm = confusion_matrix(y_true, y_pred)
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=classes, yticklabels=classes)
-    plt.title('Confusion Matrix')
-    plt.ylabel('True Label')
-    plt.xlabel('Predicted Label')
-    
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    plt.savefig(save_path)
-    plt.close()
-    print(f"Confusion matrix saved to {save_path}")
 
 def get_device():
     """Returns the appropriate device (cuda, mps, or cpu)."""
