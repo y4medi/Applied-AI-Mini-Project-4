@@ -1,5 +1,7 @@
 # Fashion Classifier - StyleSort Project
 
+**Team Members: Yansong Jia, Sepehr Mansouri**
+
 **Mini Project 4 for COMP 9130 Applied AI**
 
 ## 1. Business Problem
