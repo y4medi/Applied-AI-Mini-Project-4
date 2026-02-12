@@ -51,6 +51,20 @@ The **Batch Norm + Leaky ReLU** model achieved a final test accuracy of **92.86%
 2.  **Run Experiments**:
     Open `notebooks/fashion_classifier.ipynb` in Jupyter/VS Code and Run All Cells. This will reproduce the training, evaluation metrics, and visualization plots.
 
+## Repository Structure
+```
+fashion-classifier/
+├── notebooks/
+│   └── fashion_classifier.ipynb  # Main analysis
+├── src/
+│   ├── model.py                  # CNN architectures
+│   ├── train.py                  # Training pipeline
+│   └── utils.py                  # Data loading & plotting
+├── results/                      # Generated plots
+├── requirements.txt
+└── README.md
+```
+
 ## 6. Team Contributions
 *   **Yansong Jia**: Project Infrastructure, Model Engineering (`model.py`), Training Pipeline (`train.py`), Analytical Backend (`utils.py`), and README.
 *   **Sepehr Mansouri**: Model Benchmarking, Visualizations, Business Analysis (`notebooks/fashion_classifier.ipynb`), and Strategic Reporting.
